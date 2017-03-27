@@ -3,10 +3,26 @@ from matrix import *
 from math import *
 
 def add_box( points, x, y, z, width, height, depth ):
-    pass
+    add_point(points, x, y, z)
+    add_point(points, x + width, y, z)
+    add_point(points, x + width, y - height, z)
+    add_point(points, x, y - height, z)
+    add_point(points, x, y, z + depth)
+    add_point(points, x + width, y, z + depth)
+    add_point(points, x + width, y - height, z + depth)
+    add_point(points, x, y - height, z + depth)
 
 def add_sphere( points, cx, cy, cz, r, step ):
-    pass
+    steps_taken = 0.0
+    while steps_taken < step:
+        #print "steps_taken: " + str(steps_taken)
+        add_point(points,
+                  r * math.cos(2 * math.pi * steps_taken) + cx,
+                  r * sin(2 * math.pi * steps_taken) * math.cos(math.pi * steps_taken) + cy,
+                  r * math.sin(2 * math.pi * steps_taken)* math.sin(math.pi * steps_taken) + cz)
+        steps_taken = steps_taken + (1.0 / step)        
+    
+
 def generate_sphere( points, cx, cy, cz, r, step ):
     pass
 
