@@ -8,6 +8,7 @@ screen = new_screen()
 color = [ 0, 255, 0 ]
 edges = []
 transform = new_matrix()
+red = [255, 0, 0]
 
 # print_matrix( make_bezier() )
 # print
@@ -17,12 +18,12 @@ transform = new_matrix()
 #parse_file( 'script', edges, transform, screen, color )
 
 matrix = new_matrix()
-add_sphere(matrix, 300, 300, 300, 50, 100)
-print_matrix(matrix)
+add_sphere(matrix, 300, 300, 300, 50, 5)
 for point in range (len(matrix)):
     draw_line( int(matrix[point][0]),
                    int(matrix[point][1]),
                    int(matrix[point][0]),
                    int(matrix[point][1]),
                    screen, color)
+draw_line(300, 300, 300, 300, screen, red)
 display(screen)

@@ -13,14 +13,28 @@ def add_box( points, x, y, z, width, height, depth ):
     add_point(points, x, y - height, z + depth)
 
 def add_sphere( points, cx, cy, cz, r, step ):
-    steps_taken = 0.0
-    while steps_taken < step:
-        #print "steps_taken: " + str(steps_taken)
-        add_point(points,
-                  r * math.cos(2 * math.pi * steps_taken) + cx,
-                  r * sin(2 * math.pi * steps_taken) * math.cos(math.pi * steps_taken) + cy,
-                  r * math.sin(2 * math.pi * steps_taken)* math.sin(math.pi * steps_taken) + cz)
-        steps_taken = steps_taken + (1.0 / step)        
+    theta = 0.0
+    phi = 0.0
+    steps_taken =0 
+    while theta <= 1.0001:
+        while phi <= 1.0001:
+            add_point(points,
+                  r * math.cos(theta) + cx,
+                  r * math.sin(theta) * math.cos(phi) + cy,
+                  r * math.sin(theta)* math.sin(phi) + cz)
+        phi = phi + 1.0/step
+    theta = theta + 1.0/step
+
+
+##    while steps_taken < step:
+##        #print "steps_taken: " + str(steps_taken)
+##        phi= 2 * math.pi * (steps_taken / 100.0)
+##        theta= math.pi * (steps_taken / 100.0)
+##        add_point(points,
+##                  r * math.cos(theta) + cx,
+##                  r * math.sin(theta) * math.cos(phi) + cy,
+##                  r * math.sin(theta)* math.sin(phi) + cz)
+##        steps_taken = steps_taken + 1
     
 
 def generate_sphere( points, cx, cy, cz, r, step ):
