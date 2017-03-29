@@ -3,38 +3,30 @@ from matrix import *
 from math import *
 
 def add_box( points, x, y, z, width, height, depth ):
-    add_point(points, x, y, z)
-    add_point(points, x + width, y, z)
-    add_point(points, x + width, y - height, z)
-    add_point(points, x, y - height, z)
-    add_point(points, x, y, z + depth)
-    add_point(points, x + width, y, z + depth)
-    add_point(points, x + width, y - height, z + depth)
-    add_point(points, x, y - height, z + depth)
+    add_edge(points, x, y, z, x, y, z)
+    add_edge(points, x + width, y, z, x + width, y, z)
+    add_edge(points, x + width, y - height, z, x + width, y - height, z)
+    add_edge(points, x, y - height, z, x, y - height, z)
+    add_edge(points, x, y, z + depth, x, y, z + depth)
+    add_edge(points, x + width, y, z + depth, x + width, y, z + depth)
+    add_edge(points, x + width, y - height, z + depth, x + width, y - height, z + depth)
+    add_edge(points, x, y - height, z + depth, x, y - height, z + depth)
 
 def add_sphere( points, cx, cy, cz, r, step ):
+    step= 1.0/step
     theta = 0.0
-    phi = 0.0
-    steps_taken =0 
-    while theta <= 1.0001:
-        while phi <= 1.0001:
-            add_point(points,
-                  r * math.cos(theta) + cx,
-                  r * math.sin(theta) * math.cos(phi) + cy,
-                  r * math.sin(theta)* math.sin(phi) + cz)
-        phi = phi + 1.0/step
-    theta = theta + 1.0/step
-
-
-##    while steps_taken < step:
-##        #print "steps_taken: " + str(steps_taken)
-##        phi= 2 * math.pi * (steps_taken / 100.0)
-##        theta= math.pi * (steps_taken / 100.0)
-##        add_point(points,
-##                  r * math.cos(theta) + cx,
-##                  r * math.sin(theta) * math.cos(phi) + cy,
-##                  r * math.sin(theta)* math.sin(phi) + cz)
-##        steps_taken = steps_taken + 1
+    while theta <= step:
+        phi = 0.0
+        while phi <= step:
+            add_edge(points,
+                      r * math.cos(2 * math.pi * (theta/ step)) + cx,
+                      r * math.sin(2 * math.pi * (theta/step)) * math.cos(math.pi * (phi/step)) + cy,
+                      r * math.sin(2 * math.pi * (theta/step))* math.sin(math.pi * (phi/step)) + cz,
+                      r * math.cos(2 * math.pi * (theta/ step)) + cx,
+                      r * math.sin(2 * math.pi * (theta/step)) * math.cos(math.pi * (phi/step)) + cy,
+                      r * math.sin(2 * math.pi * (theta/step))* math.sin(math.pi * (phi/step)) + cz)
+            phi = phi + 1.0
+        theta = theta + 1.0
     
 
 def generate_sphere( points, cx, cy, cz, r, step ):
