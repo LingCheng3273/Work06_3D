@@ -1,6 +1,6 @@
 from display import *
 from draw import *
-from parser import *
+from parser2 import *
 from matrix import *
 import math
 
@@ -16,14 +16,3 @@ red = [255, 0, 0]
 # print
 
 parse_file( 'script', edges, transform, screen, color )
-
-##matrix = new_matrix()
-##add_sphere(matrix, 300, 300, 300, 50, 100)
-##for point in range (len(matrix)):
-##    draw_line( int(matrix[point][0]),
-##                   int(matrix[point][1]),
-##                   int(matrix[point][0]),
-##                   int(matrix[point][1]),
-##                   screen, color)
-##
-##display(screen)

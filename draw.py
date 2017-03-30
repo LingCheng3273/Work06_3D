@@ -12,30 +12,49 @@ def add_box( points, x, y, z, width, height, depth ):
     add_edge(points, x + width, y - height, z + depth, x + width, y - height, z + depth)
     add_edge(points, x, y - height, z + depth, x, y - height, z + depth)
 
-def add_sphere( points, cx, cy, cz, r, step ):
+def add_sphere( matrix, cx, cy, cz, r, step ):
+    points= []
+    generate_sphere(points, cx, cy, cz, r, step)
+    for i in range(len(points)):
+        add_edge(matrix,
+                 points[i][0], points[i][1], points[i][2],
+                 points[i][0], points[i][1], points[i][2])
+
+def generate_sphere( points, cx, cy, cz, r, step ):
     step= 1.0/step
     theta = 0.0
     while theta <= step:
         phi = 0.0
         while phi <= step:
-            add_edge(points,
-                      r * math.cos(2 * math.pi * (theta/ step)) + cx,
-                      r * math.sin(2 * math.pi * (theta/step)) * math.cos(math.pi * (phi/step)) + cy,
-                      r * math.sin(2 * math.pi * (theta/step))* math.sin(math.pi * (phi/step)) + cz,
+            add_point(points,
                       r * math.cos(2 * math.pi * (theta/ step)) + cx,
                       r * math.sin(2 * math.pi * (theta/step)) * math.cos(math.pi * (phi/step)) + cy,
                       r * math.sin(2 * math.pi * (theta/step))* math.sin(math.pi * (phi/step)) + cz)
             phi = phi + 1.0
         theta = theta + 1.0
-    
 
-def generate_sphere( points, cx, cy, cz, r, step ):
-    pass
 
-def add_torus( points, cx, cy, cz, r0, r1, step ):
-    pass
+def add_torus( matrix, cx, cy, cz, r0, r1, step ):
+    points= []
+    generate_torus(points, cx, cy, cz, r0, r1, step)
+    for i in range(len(points)):
+        add_edge(matrix,
+                 points[i][0], points[i][1], points[i][2],
+                 points[i][0], points[i][1], points[i][2])
+
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
-    pass
+    step= 1.0/step
+    theta = 0.0
+    while theta <= step:
+        phi = 0.0
+        while phi <= step:
+            add_point(points,
+                      math.cos(2 * math.pi * (phi/ step))* (r0 * cos(2 * math.pi * (theta/step)) + r1)+ cx,
+                      r0 * math.sin(2 * math.pi * (theta/step))+ cy,
+                      -1 * math.sin(2 * math.pi * (phi/step))* (r0 * math.cos(2 * math.pi * (theta/step)) + r1)+ cz)
+            phi = phi + 1.0
+        theta = theta + 1.0
+
 
 def add_circle( points, cx, cy, cz, r, step ):
     x0 = r + cx
